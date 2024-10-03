@@ -1,11 +1,21 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import todoRouter from './routes/todo.js';
+import userRouter from './routes/user.js';
+// import 'dotenv/config'
+
+// connect to database
+await mongoose.connect(process.env.TODO_URI);
 
 // create an express app
 const app = express();
 
+// use middlewares
+app.use(express.json());
+
 // use routes
-app.use(todoRouter);
+app.use(todoRouter, userRouter);
+// app.use(userRouter);
 
 // listen for incoming request
 app.listen(3030, () => {
